@@ -6,10 +6,10 @@ import (
 )
 
 func init() {
-	if err := bql.RegisterGlobalSourceCreator("fluentd", bql.SourceCreatorFunc(fluentbee.NewSource)); err != nil {
+	if err := bql.RegisterGlobalSourceCreator("fluentd", bql.SourceCreatorFunc(fluentd.NewSource)); err != nil {
 		panic(err)
 	}
-	if err := bql.RegisterGlobalSinkCreator("fluentd", bql.SinkCreatorFunc(fluentbee.NewSink)); err != nil {
+	if err := bql.RegisterGlobalSinkCreator("fluentd", bql.SinkCreatorFunc(fluentd.NewSink)); err != nil {
 		panic(err)
 	}
 }
