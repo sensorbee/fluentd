@@ -1,6 +1,7 @@
 package fluentd
 
 import (
+	"github.com/Sirupsen/logrus"
 	"github.com/fluent/fluentd-forwarder"
 	"github.com/op/go-logging"
 	"pfi/sensorbee/sensorbee/core"
@@ -28,14 +29,17 @@ func (s *source) Emit(rset []fluentd_forwarder.FluentRecordSet) error {
 
 			m, err := data.NewMap(r.Data)
 			if err != nil {
-				s.ctx.Logger.Log(core.Error, "Cannot create a map from data: %v", r.Data)
+				s.ctx.ErrLog(err).WithFields(logrus.Fields{
+					"source_type": "fluentd",
+					"data":        r.Data,
+				}).Error("Cannot create a data.Map from the data")
 				continue
 			}
 			m[s.tagField] = data.String(rs.Tag)
 
 			t.Data = m
 			if err := s.w.Write(s.ctx, t); err != nil {
-				s.ctx.Logger.Log(core.Error, "Cannot write a tuple: %v", err)
+				s.ctx.ErrLog(err).WithField("source_type", "fluentd").Error("Cannot write a tuple")
 			}
 		}
 	}
