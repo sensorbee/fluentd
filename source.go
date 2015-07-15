@@ -4,6 +4,7 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/fluent/fluentd-forwarder"
 	"github.com/op/go-logging"
+	"pfi/sensorbee/sensorbee/bql"
 	"pfi/sensorbee/sensorbee/core"
 	"pfi/sensorbee/sensorbee/data"
 	"time"
@@ -14,6 +15,7 @@ type source struct {
 	ctx   *core.Context
 	w     core.Writer
 
+	ioParams *bql.IOParams
 	bind     string
 	tagField string
 }
@@ -30,7 +32,8 @@ func (s *source) Emit(rset []fluentd_forwarder.FluentRecordSet) error {
 			m, err := data.NewMap(r.Data)
 			if err != nil {
 				s.ctx.ErrLog(err).WithFields(logrus.Fields{
-					"source_type": "fluentd",
+					"source_type": s.ioParams.TypeName,
+					"source_name": s.ioParams.Name,
 					"data":        r.Data,
 				}).Error("Cannot create a data.Map from the data")
 				continue
@@ -39,7 +42,10 @@ func (s *source) Emit(rset []fluentd_forwarder.FluentRecordSet) error {
 
 			t.Data = m
 			if err := s.w.Write(s.ctx, t); err != nil {
-				s.ctx.ErrLog(err).WithField("source_type", "fluentd").Error("Cannot write a tuple")
+				s.ctx.ErrLog(err).WithFields(logrus.Fields{
+					"source_type": s.ioParams.TypeName,
+					"source_name": s.ioParams.Name,
+				}).Error("Cannot write a tuple")
 			}
 		}
 	}
@@ -70,8 +76,9 @@ func (n *nullWriter) Write(data []byte) (int, error) {
 }
 
 // NewSource create a new Source receiving data from fluentd's out_forward.
-func NewSource(ctx *core.Context, params data.Map) (core.Source, error) {
+func NewSource(ctx *core.Context, ioParams *bql.IOParams, params data.Map) (core.Source, error) {
 	s := &source{
+		ioParams: ioParams,
 		bind:     "127.0.0.1:24224",
 		tagField: "tag",
 	}

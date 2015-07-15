@@ -3,6 +3,7 @@ package fluentd
 import (
 	"github.com/fluent/fluentd-forwarder"
 	"github.com/op/go-logging"
+	"pfi/sensorbee/sensorbee/bql"
 	"pfi/sensorbee/sensorbee/core"
 	"pfi/sensorbee/sensorbee/data"
 	"time"
@@ -56,7 +57,7 @@ func (s *sink) Close(ctx *core.Context) error {
 }
 
 // NewSink creates a new Sink for SensorBee which sends tuples to fluentd.
-func NewSink(ctx *core.Context, params data.Map) (core.Sink, error) {
+func NewSink(ctx *core.Context, ioParams *bql.IOParams, params data.Map) (core.Sink, error) {
 	conf := struct {
 		// fluentd parameters
 		forwardTo           string
