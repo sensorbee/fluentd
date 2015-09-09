@@ -28,7 +28,7 @@ CREATE SOURCE <name> TYPE fluentd;
 `bind` parameter has the address and the port number on which the sink listens.
 Its format is `<addr>:<port>`. For example `127.0.0.1:24224`, `0.0.0.0:12345`.
 
-Its default value is `'127.0.0.1:242224'`.
+Its default value is `'127.0.0.1:24224'`.
 
 Example:
 
