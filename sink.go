@@ -162,7 +162,8 @@ func NewSink(ctx *core.Context, ioParams *bql.IOParams, params data.Map) (core.S
 		conf.writeTimeout,
 		conf.flushInterval,
 		conf.journalGroupPath,
-		conf.maxJournalChunkSize)
+		conf.maxJournalChunkSize,
+		"")
 	if err != nil {
 		return nil, err
 	}
