@@ -9,7 +9,7 @@ Just import plugin package from an application:
 
 ```go
 import (
-    _ "pfi/sensorbee/fluentd/plugin"
+    _ "github.com/sensorbee/fluentd/plugin"
 )
 ```
 

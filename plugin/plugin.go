@@ -1,7 +1,7 @@
 package plugin
 
 import (
-	"pfi/sensorbee/fluentd"
+	"github.com/sensorbee/fluentd"
 	"pfi/sensorbee/sensorbee/bql"
 )
 
