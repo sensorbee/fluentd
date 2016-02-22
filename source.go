@@ -4,9 +4,9 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/fluent/fluentd-forwarder"
 	"github.com/op/go-logging"
-	"pfi/sensorbee/sensorbee/bql"
-	"pfi/sensorbee/sensorbee/core"
-	"pfi/sensorbee/sensorbee/data"
+	"gopkg.in/sensorbee/sensorbee.v0/bql"
+	"gopkg.in/sensorbee/sensorbee.v0/core"
+	"gopkg.in/sensorbee/sensorbee.v0/data"
 	"time"
 )
 
