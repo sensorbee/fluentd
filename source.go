@@ -1,7 +1,7 @@
 package fluentd
 
 import (
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/fluent/fluentd-forwarder"
 	"github.com/op/go-logging"
 	"gopkg.in/sensorbee/sensorbee.v0/bql"
